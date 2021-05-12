@@ -10,7 +10,6 @@ import WelcomePages from "../layouts/WelcomePages"
 import { observer } from "mobx-react"
 // import UserStore from "../stores/UserStore"
 import { drawKeypoints } from "../utils/tensorflow-utils"
-import DeviceOrientation from "react-device-orientation"
 import useDimensions from "react-use-dimensions"
 
 const PoseEstimation = observer(() => {
@@ -23,7 +22,6 @@ const PoseEstimation = observer(() => {
   // const [gamma, setGamma] = useState()
 
   // current image hook
-  const [gyroscopeOn, setGyroscopeOn] = useState<boolean>()
   const [pose, setPose] = useState<any>()
 
   useEffect(() => {
@@ -31,9 +29,7 @@ const PoseEstimation = observer(() => {
       typeof window !== "undefined" &&
       typeof window.navigator !== "undefined"
     ) {
-      runPosenet().then(() => {
-        setGyroscopeOn(true)
-      })
+      runPosenet()
     }
   }, [])
   // //load rotation coordinates
@@ -124,18 +120,6 @@ const PoseEstimation = observer(() => {
             width={width}
             height={height}
           ></canvas>
-        ) : null}
-        {gyroscopeOn ? (
-          <DeviceOrientation>
-            {({ absolute, alpha, beta, gamma }) => (
-              <div>
-                {`Absolute: ${absolute}`}
-                {`Alpha: ${alpha}`}
-                {`Beta: ${beta}`}
-                {`Gamma: ${gamma}`}
-              </div>
-            )}
-          </DeviceOrientation>
         ) : null}
       </S.PageWrapper>
     </WelcomePages>
