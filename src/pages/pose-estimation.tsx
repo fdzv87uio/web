@@ -58,8 +58,8 @@ const PoseEstimation = observer(() => {
     ) {
       // Get Video Properties
       const video = camRef.current.camRef.current
-      const videoWidth = width
-      const videoHeight = height
+      const videoWidth = camRef.current.camRef.current.width
+      const videoHeight = camRef.current.camRef.current.height
 
       // Make detections
       const pose = await net.estimateSinglePose(video)
@@ -92,7 +92,6 @@ const PoseEstimation = observer(() => {
         typeof width !== "undefined" &&
         typeof height !== "undefined" ? (
           <S.CustomCamera
-            showFocus={true}
             front={false}
             capture={capture}
             ref={camRef}
